@@ -184,4 +184,24 @@ bot.on("voice", async (msg) => {
   await processarMensagem(msg, 'audio');
 });
 
+
 console.log("🤖 Bot iniciado! Não esqueça de configurar seu ID_DO_ADMIN.");
+
+// ... (mantenha todo o seu código anterior aqui)
+
+// --- MANTENDO O RENDER VIVO (SERVIDOR FAKE) ---
+const express = require('express');
+const app = express();
+
+// Rota simples para o Render ver que estamos online
+app.get('/', (req, res) => {
+  res.send('Estou online! 🤖');
+});
+
+// IMPORTANTE: O Render te dá uma porta via process.env.PORT
+// Se não usar essa variável exata, ele vai dar Timeout de novo.
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`Servidor rodando na porta ${port}`);
+});
