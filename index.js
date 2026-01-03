@@ -9,7 +9,8 @@ const { liberarAcesso, verificarAcesso, bloquearAcesso } = require("./database")
 
 const bot = new TelegramBot(process.env.TOKEN, { polling: true });
 
-// --- CONFIGURAÇÕES DE ASSINATURA ---
+// --- CONFIGURAÇÕES DE ASSINATURA --
+
 const ID_DO_ADMIN = 5891023152; // <--- TROQUE PELO SEU ID (Use o @userinfobot para descobrir)
 const CHAVE_PIX = "anaclaratdsua@gmail.com"; // <--- SUA CHAVE PIX
 const PRECO = "R$ 9,90";
@@ -224,5 +225,6 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
+
 
 
