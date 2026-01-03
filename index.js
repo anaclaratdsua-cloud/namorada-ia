@@ -5,6 +5,7 @@ const path = require("path");
 const axios = require("axios");
 const { gerarResposta, iniciarMensagensEspontaneas, gerarImagem, transcreverAudio } = require("./ai");
 const { liberarAcesso, verificarAcesso } = require("./database");
+const { liberarAcesso, verificarAcesso, bloquearAcesso } = require("./database");
 
 const bot = new TelegramBot(process.env.TOKEN, { polling: true });
 
@@ -28,6 +29,24 @@ bot.onText(/\/liberar (\d+)/, (msg, match) => {
 
   bot.sendMessage(msg.chat.id, `✅ Usuário ${idCliente} liberado até ${dataVencimento}!`);
   bot.sendMessage(idCliente, "🎉 **Pagamento Confirmado!**\n\nSua assinatura mensal está ativa. Pode conversar, pedir fotos e mandar áudios à vontade amor! 💕", { parse_mode: "Markdown" });
+});
+
+// Comando: /bloquear ID
+bot.onText(/\/bloquear (\d+)/, (msg, match) => {
+  if (msg.from.id !== ID_DO_ADMIN) return; // Só você pode usar
+
+  const idCliente = match[1];
+  const sucesso = bloquearAcesso(idCliente);
+
+  if (sucesso) {
+    bot.sendMessage(msg.chat.id, `🚫 **Usuário ${idCliente} bloqueado com sucesso!**`, { parse_mode: "Markdown" });
+    
+    // Opcional: Avisar o usuário que acabou a festa
+    bot.sendMessage(idCliente, "🚫 **Atenção:** Seu acesso foi suspenso ou expirou.\nEntre em contato com o suporte ou use /assinar para renovar.")
+       .catch(() => console.log("Erro ao avisar usuário (ele pode ter bloqueado o bot)"));
+  } else {
+    bot.sendMessage(msg.chat.id, `⚠️ Não encontrei o usuário ${idCliente} na base de dados.`);
+  }
 });
 
 // --- 2. COMANDOS PÚBLICOS ---
@@ -205,4 +224,5 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
+
 
