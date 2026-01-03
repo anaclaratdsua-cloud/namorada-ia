@@ -11,7 +11,7 @@ const bot = new TelegramBot(process.env.TOKEN, { polling: true });
 // --- CONFIGURAÇÕES DE ASSINATURA ---
 const ID_DO_ADMIN = 5891023152; // <--- TROQUE PELO SEU ID (Use o @userinfobot para descobrir)
 const CHAVE_PIX = "anaclaratdsua@gmail.com"; // <--- SUA CHAVE PIX
-const PRECO = "R$ 19,90";
+const PRECO = "R$ 9,90";
 const SITE = "https://bit.ly/44VM4OZ"
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -205,3 +205,4 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
+
