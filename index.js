@@ -4,8 +4,8 @@ const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
 const { gerarResposta, iniciarMensagensEspontaneas, gerarImagem, transcreverAudio } = require("./ai");
-const { liberarAcesso, verificarAcesso } = require("./database");
-const { liberarAcesso, verificarAcesso, bloquearAcesso } = require("./database");
+const { liberarAcesso, verificarAcesso, bloquearAcesso  } = require("./database");
+
 
 const bot = new TelegramBot(process.env.TOKEN, { polling: true });
 
@@ -225,6 +225,7 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
+
 
 
 
